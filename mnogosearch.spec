@@ -4,7 +4,7 @@
 
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
-Version:	3.3.0
+Version:	3.3.1
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
