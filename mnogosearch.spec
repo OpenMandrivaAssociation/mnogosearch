@@ -4,7 +4,7 @@
 
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
-Version:	3.3.2
+Version:	3.3.3
 Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
@@ -230,5 +230,3 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 %attr (0644,root,root) %{_libdir}/*.a
 %attr (0644,root,root) %{_libdir}/*.la
 %attr (0755,root,root) %{_libdir}/*.so
-
-
