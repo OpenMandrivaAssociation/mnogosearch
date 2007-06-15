@@ -5,7 +5,7 @@
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
 Version:	3.3.3
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -17,6 +17,7 @@ Patch0:		mnogosearch-local_button.diff
 Patch1:		mnogosearch-3.2.16-udm-config.patch
 Patch2:		mnogosearch-soname.diff
 Patch3:		mnogosearch-3.2.11-docs_fix.patch
+Patch4:		mnogosearch-pgsql_header.diff
 Requires(pre):  apache-mpm-prefork
 Requires:       apache-mpm-prefork
 BuildRequires:	autoconf2.5
@@ -72,6 +73,7 @@ This package contains the %{name} development files.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%patch4 -p0
 
 # CVS cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -89,6 +91,17 @@ cp %{SOURCE3} mnogosearch.png
 perl -pi -e "s|/lib\b|/%{_lib}|g" configure*
 
 %build
+export CFLAGS="%{optflags}"
+export CXXFLAGS="%{optflags}"
+export FFLAGS="%{optflags}"
+
+%if %mdkversion >= 200710
+export CFLAGS="$CFLAGS -fstack-protector"
+export CXXFLAGS="$CXXFLAGS -fstack-protector"
+export FFLAGS="$FFLAGS -fstack-protector"
+%endif
+
+
 export WANT_AUTOCONF_2_5=1
 rm -f missing configure
 libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automake-1.7 --copy --add-missing --force
