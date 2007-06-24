@@ -5,7 +5,7 @@
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
 Version:	3.3.3
-Release:	%mkrel 2
+Release:	%mkrel 3
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -18,8 +18,8 @@ Patch1:		mnogosearch-3.2.16-udm-config.patch
 Patch2:		mnogosearch-soname.diff
 Patch3:		mnogosearch-3.2.11-docs_fix.patch
 Patch4:		mnogosearch-pgsql_header.diff
-Requires(pre):  apache-mpm-prefork
-Requires:       apache-mpm-prefork
+Requires(pre):  apache-mpm
+Requires:       apache-mpm
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
