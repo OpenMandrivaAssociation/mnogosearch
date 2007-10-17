@@ -1,11 +1,12 @@
 %define major 3
 %define minor 2
 %define libname %mklibname mnogosearch %{major}.%{minor}
+%define develname %mklibname mnogosearch -d
 
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
-Version:	3.3.3
-Release:	%mkrel 3
+Version:	3.3.5
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -18,8 +19,8 @@ Patch1:		mnogosearch-3.2.16-udm-config.patch
 Patch2:		mnogosearch-soname.diff
 Patch3:		mnogosearch-3.2.11-docs_fix.patch
 Patch4:		mnogosearch-pgsql_header.diff
-Requires(pre):  apache-mpm
-Requires:       apache-mpm
+Requires(pre):  apache-mpm-prefork
+Requires:       apache-mpm-prefork
 BuildRequires:	autoconf2.5
 BuildRequires:	automake1.7
 BuildRequires:	libtool
@@ -30,7 +31,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	openjade
 BuildRequires:	docbook-utils
 Conflicts:	gnusearch
-BuildRequires:	MySQL-devel >= 5.0
+BuildRequires:	mysql-devel >= 5.0
 BuildRequires:	readline-devel
 BuildRequires:	libncurses-devel
 BuildRequires:	multiarch-utils >= 1.0.3
@@ -50,20 +51,22 @@ support.
 
 mnoGoSearch is built with MySQL support.
 
-%package -n		%{libname}
-Summary:		Libraries for %{name} 
-Group:          	System/Libraries
+%package -n	%{libname}
+Summary:	Libraries for %{name} 
+Group:          System/Libraries
 
-%description -n		%{libname}
+%description -n	%{libname}
 This package contains the %{name} library files.
 
-%package -n		%{libname}-devel
-Summary:		Development headers and libraries for %{name}
-Group:			Development/C
-Requires:		%{libname} = %{version}
-Provides:		lib%{name}-devel = %{version}
+%package -n	%{develname}
+Summary:	Development headers and libraries for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}
+Provides:	lib%{name}-devel = %{version}
+Provides:	%{mklibname mnogosearch 3.2 -d} = %{version}-%{release}
+Obsoletes:	%{mklibname mnogosearch 3.2 -d}
 
-%description -n		%{libname}-devel
+%description -n	%{develname}
 This package contains the %{name} development files.
 
 %prep
@@ -91,16 +94,7 @@ cp %{SOURCE3} mnogosearch.png
 perl -pi -e "s|/lib\b|/%{_lib}|g" configure*
 
 %build
-export CFLAGS="%{optflags}"
-export CXXFLAGS="%{optflags}"
-export FFLAGS="%{optflags}"
-
-%if %mdkversion >= 200710
-export CFLAGS="$CFLAGS -fstack-protector"
-export CXXFLAGS="$CXXFLAGS -fstack-protector"
-export FFLAGS="$FFLAGS -fstack-protector"
-%endif
-
+%serverbuild
 
 export WANT_AUTOCONF_2_5=1
 rm -f missing configure
@@ -233,7 +227,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 %defattr (0644,root,root,0755)
 %attr (0755,root,root) %{_libdir}/lib*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr (0644,root,root,0755)
 %multiarch %attr (0755,root,root) %{multiarch_bindir}/mnogosearch-%{version}-config
 %multiarch %attr (0644,root,root) %{multiarch_includedir}/mnogosearch-%{version}/udm_config.h
