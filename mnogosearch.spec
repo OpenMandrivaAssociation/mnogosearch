@@ -6,7 +6,7 @@
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
 Version:	3.3.5
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -96,12 +96,15 @@ perl -pi -e "s|/lib\b|/%{_lib}|g" configure*
 %build
 %serverbuild
 
+%if %mdkversion <= 200600
+export CFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
+export CXXFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
+export FFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
+%endif
+
 export WANT_AUTOCONF_2_5=1
 rm -f missing configure
 libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automake-1.7 --copy --add-missing --force
-
-# the build doesn't survive using %{optflags}, really really weird!
-#export CFLAGS="%{optflags}"
 
 ./configure \
     --prefix=%{_prefix} \
