@@ -35,6 +35,7 @@ BuildRequires:	mysql-devel >= 5.0
 BuildRequires:	readline-devel
 BuildRequires:	libncurses-devel
 BuildRequires:	multiarch-utils >= 1.0.3
+BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
 
 %description
 mnoGoSearch (formerly known as UdmSearch) is a full-featured Web search engine
