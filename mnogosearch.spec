@@ -190,9 +190,13 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 %multiarch_includes %{buildroot}%{_includedir}/%{name}-%{version}/udm_config.h
 %multiarch_includes %{buildroot}%{_includedir}/%{name}-%{version}/udm_autoconf.h
 
+%if %mdkversion < 200900
 %post -n %{libname} -p /sbin/ldconfig
+%endif
 
+%if %mdkversion < 200900
 %postun -n %{libname} -p /sbin/ldconfig
+%endif
 
 %clean
 [ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
