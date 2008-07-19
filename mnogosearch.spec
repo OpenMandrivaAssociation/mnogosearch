@@ -6,7 +6,7 @@
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
 Version:	3.3.7
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -18,7 +18,6 @@ Patch0:		mnogosearch-local_button.diff
 Patch1:		mnogosearch-3.2.16-udm-config.patch
 Patch2:		mnogosearch-soname.diff
 Patch3:		mnogosearch-3.2.11-docs_fix.patch
-Patch4:		mnogosearch-pgsql_header.diff
 Requires(pre):  apache-mpm-prefork
 Requires:       apache-mpm-prefork
 BuildRequires:	autoconf2.5
@@ -76,7 +75,6 @@ This package contains the %{name} development files.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
-%patch4 -p0
 
 # CVS cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -106,6 +104,8 @@ export WANT_AUTOCONF_2_5=1
 rm -f missing configure
 libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automake-1.7 --copy --add-missing --force
 
+export LDFLAGS="-Wl,--as-needed -Wl,--no-undefined"
+
 ./configure \
     --prefix=%{_prefix} \
     --exec-prefix=%{_exec_prefix} \
@@ -116,7 +116,7 @@ libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automak
     --includedir=%{_includedir} \
     --libdir=%{_libdir} \
     --libexecdir=%{_libexecdir} \
-    --localstatedir=%{_localstatedir}/lib/mnogosearch \
+    --localstatedir=/var/lib/mnogosearch \
     --sharedstatedir=%{_sharedstatedir} \
     --mandir=%{_mandir} \
     --infodir=%{_infodir} \
@@ -148,7 +148,7 @@ export DONT_GPRINTIFY=1
 
 install -d %{buildroot}%{_includedir}/%{name}-%{version}
 install -d %{buildroot}%{_infodir}
-install -d %{buildroot}%{_localstatedir}/lib
+install -d %{buildroot}/var/lib
 install -d %{buildroot}%{_sysconfdir}/cron.daily
 install -d %{buildroot}/var/www/cgi-bin
 install -d %{buildroot}/var/www/html
@@ -209,8 +209,8 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 %attr (0755,root,root) %{_bindir}/mguesser
 %attr (0755,root,root) /var/www/cgi-bin/*
 %attr (0644,root,root) /var/www/icons/mnogosearch.png
-%dir %{_localstatedir}/lib/mnogosearch
-%dir %{_localstatedir}/lib/mnogosearch/cache
+%dir /var/lib/mnogosearch
+%dir /var/lib/mnogosearch/cache
 %dir %{_sysconfdir}/mnogosearch
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mnogosearch/indexer.conf
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mnogosearch/langmap.conf
