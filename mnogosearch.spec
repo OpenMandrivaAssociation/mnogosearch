@@ -5,8 +5,8 @@
 
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
-Version:	3.3.7
-Release:	%mkrel 3
+Version:	3.3.8
+Release:	%mkrel 1
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -30,11 +30,11 @@ BuildRequires:	openssl-devel
 BuildRequires:	openjade
 BuildRequires:	docbook-utils
 Conflicts:	gnusearch
-BuildRequires:	mysql-devel >= 5.0
+BuildRequires:	mysql-devel >= 5.1
 BuildRequires:	readline-devel
 BuildRequires:	libncurses-devel
 BuildRequires:	multiarch-utils >= 1.0.3
-BuildRoot:	%{_tmppath}/%{name}-%{version}-buildroot
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 mnoGoSearch (formerly known as UdmSearch) is a full-featured Web search engine
@@ -104,7 +104,7 @@ export WANT_AUTOCONF_2_5=1
 rm -f missing configure
 libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automake-1.7 --copy --add-missing --force
 
-export LDFLAGS="-Wl,--as-needed -Wl,--no-undefined"
+export LDFLAGS="%{ldflags}"
 
 ./configure \
     --prefix=%{_prefix} \
@@ -131,9 +131,8 @@ export LDFLAGS="-Wl,--as-needed -Wl,--no-undefined"
     --with-openssl=%{_prefix} \
     --with-zlib \
     --with-readline \
-    --with-extra-charsets=all
-
-# --enable-mysql-fulltext-plugin  <- requires mysql 5.1.x
+    --with-extra-charsets=all \
+    --enable-mysql-fulltext-plugin
 
 make
 
@@ -141,7 +140,7 @@ make
 # conditional build: --with-unixODBC --with-freetds
 
 %install
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 # don't fiddle with the initscript!
 export DONT_GPRINTIFY=1
@@ -199,7 +198,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 %endif
 
 %clean
-[ -n "%{buildroot}" -a "%{buildroot}" != / ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %files
 %defattr (0644,root,root,0755)
@@ -232,7 +231,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 
 %files -n %{libname}
 %defattr (0644,root,root,0755)
-%attr (0755,root,root) %{_libdir}/lib*.so.*
+%attr (0755,root,root) %{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
 %defattr (0644,root,root,0755)
