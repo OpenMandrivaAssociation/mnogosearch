@@ -6,7 +6,7 @@
 Summary:	Another one web indexing and searching system for a small domain or intranet
 Name:		mnogosearch
 Version:	3.3.9
-Release:	%mkrel 3
+Release:	%mkrel 4
 License:	GPL
 Group:		System/Servers
 URL:		http://www.mnogosearch.org/
@@ -18,10 +18,11 @@ Patch0:		mnogosearch-local_button.diff
 Patch1:		mnogosearch-3.2.16-udm-config.patch
 Patch2:		mnogosearch-soname.diff
 Patch3:		mnogosearch-3.2.11-docs_fix.patch
+Patch4:		mnogosearch-3.3.9-fix-install.patch
 Requires(pre):  apache-mpm-prefork
 Requires:       apache-mpm-prefork
-BuildRequires:	autoconf2.5
-BuildRequires:	automake1.7
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	openssl-devel
 BuildRequires:	zlib-devel
@@ -75,6 +76,7 @@ This package contains the %{name} development files.
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
+%patch4 -p0
 
 # CVS cleanup
 for i in `find . -type d -name CVS` `find . -type f -name .cvs\*` `find . -type f -name .#\*`; do
@@ -92,35 +94,19 @@ cp %{SOURCE3} mnogosearch.png
 perl -pi -e "s|/lib\b|/%{_lib}|g" configure*
 
 %build
-%serverbuild
+autoreconf -fi
 
 %if %mdkversion <= 200600
 export CFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
 export CXXFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
 export FFLAGS="%(echo %{optflags} | sed 's/-Wp,-D_FORTIFY_SOURCE=2//') -fno-omit-frame-pointer"
 %endif
-
-export WANT_AUTOCONF_2_5=1
-rm -f missing configure
-libtoolize --automake --copy --force; aclocal-1.7 -I build/m4; autoconf; automake-1.7 --copy --add-missing --force
-
-export LDFLAGS="%{ldflags}"
-
-./configure \
-    --prefix=%{_prefix} \
-    --exec-prefix=%{_exec_prefix} \
-    --bindir=%{_bindir} \
-    --sbindir=%{_sbindir} \
+%serverbuild
+%configure2_5x \
     --sysconfdir=%{_sysconfdir}/mnogosearch  \
     --datadir=%{_datadir}/mnogosearch  \
-    --includedir=%{_includedir} \
-    --libdir=%{_libdir} \
-    --libexecdir=%{_libexecdir} \
-    --localstatedir=/var/lib/mnogosearch \
-    --sharedstatedir=%{_sharedstatedir} \
-    --mandir=%{_mandir} \
-    --infodir=%{_infodir} \
     --enable-syslog --enable-syslog=LOG_LOCAL6 \
+    --localstatedir=/var/lib/mnogosearch \
     --with-mysql \
     --enable-parser \
     --enable-mp3 \
