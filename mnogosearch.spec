@@ -172,7 +172,9 @@ rm -rf %{buildroot}%{_datadir}/%{name}/sqlite
 rm -rf %{buildroot}%{_datadir}/%{name}/pgsql
 
 %multiarch_binaries %{buildroot}%{_bindir}/%{name}-%{version}-config
+
 %multiarch_includes %{buildroot}%{_includedir}/%{name}-%{version}/udm_config.h
+
 %multiarch_includes %{buildroot}%{_includedir}/%{name}-%{version}/udm_autoconf.h
 
 %if %mdkversion < 200900
@@ -221,9 +223,9 @@ rm -rf %{buildroot}
 
 %files -n %{develname}
 %defattr (0644,root,root,0755)
-%multiarch %attr (0755,root,root) %{multiarch_bindir}/mnogosearch-%{version}-config
-%multiarch %attr (0644,root,root) %{multiarch_includedir}/mnogosearch-%{version}/udm_config.h
-%multiarch %attr (0644,root,root) %{multiarch_includedir}/mnogosearch-%{version}/udm_autoconf.h
+%attr (0755,root,root) %{multiarch_bindir}/mnogosearch-%{version}-config
+%attr (0644,root,root) %{multiarch_includedir}/mnogosearch-%{version}/udm_config.h
+%attr (0644,root,root) %{multiarch_includedir}/mnogosearch-%{version}/udm_autoconf.h
 %attr (0755,root,root) %{_bindir}/mnogosearch-%{version}-config
 %attr (0644,root,root) %{_includedir}/mnogosearch-%{version}/*.h
 %attr (0644,root,root) %{_libdir}/*.a
