@@ -1,0 +1,20 @@
+--- etc/search.htm-dist	2007-04-18 07:00:33.000000000 +0200
++++ etc/search.htm-dist.oden	2007-04-20 08:34:22.000000000 +0200
+@@ -467,7 +467,7 @@
+ <table class="white" summary="">
+ <tr>
+   <td align="left">
+-    <a href="http://www.mnogosearch.org/"><img class="logo" src="http://www.mnogosearch.org/img/udm.gif" alt="Powered by mnoGoSearch" /></a>
++    <a href="http://www.mnogosearch.org/"><img class="logo" src="/icons/mnogosearch.png" alt="Powered by mnoGoSearch" /></a>
+     <a href="http://www.mnogosearch.org/"><small>Powered by mnoGoSearch $(version) - web search engine software</small></a><br />
+   </td>
+ </tr>
+@@ -496,7 +496,7 @@
+ <!--storedoc_bottom-->
+ <HR>
+ <CENTER>
+-<a href="http://www.mnogosearch.org/"><IMG BORDER=0 SRC="http://www.mnogosearch.org/img/udm.gif"></A>
++<a href="http://www.mnogosearch.org/"><IMG BORDER=0 SRC="/icons/mnogosearch.png"></A>
+ <FONT SIZE=1><A HREF="http://www.mnogosearch.org/">Powered by mnoGoSearch $(version) - web search engine software</A></FONT>
+ </CENTER>
+ <!--/storedoc_bottom-->

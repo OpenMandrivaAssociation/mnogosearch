@@ -1,0 +1,19 @@
+--- src/Makefile.am	2008-12-16 11:10:25.000000000 +0100
++++ src/Makefile.am.oden	2009-02-14 15:26:57.000000000 +0100
+@@ -43,14 +43,14 @@
+ 
+ EXTRA_libmnogosearch_la_SOURCES = efence.c ef_page.c ef_print.c
+ libmnogosearch_la_LIBADD = @efOBJ@ -L. -L.libs -lmnogocharset
+-libmnogosearch_la_LDFLAGS = -release 3.3
++libmnogosearch_la_LDFLAGS = -version-info 3:3:0
+ libmnogosearch_la_DEPENDENCIES = libmnogocharset.la @efOBJ@
+ 
+ libmnogocharset_la_SOURCES = uconv.c unidata.c sgml.c unicode.c \
+ uconv-8bit.c uconv-alias.c uconv-big5.c uconv-eucjp.c uconv-euckr.c \
+ uconv-gb2312.c uconv-gbk.c uconv-sjis.c uconv-sys.c uconv-utf8.c uconv-gujarati.c \
+ uconv-tscii.c 
+-libmnogocharset_la_LDFLAGS = -release 3.3
++libmnogocharset_la_LDFLAGS = -version-info 3:3:0
+ 
+ gcov_FILES = ${libmnogosearch_la_SOURCES} ${indexer_SOURCES}
+ 

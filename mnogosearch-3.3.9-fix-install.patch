@@ -1,0 +1,10 @@
+--- include/Makefile.am.link	2010-04-20 11:19:14.000000000 +0200
++++ include/Makefile.am	2010-04-20 11:19:29.000000000 +0200
+@@ -19,7 +19,6 @@
+ udm_host.h \
+ udm_xmalloc.h \
+ udm_id3.h \
+-udm_http.h \
+ udm_crc32.h \
+ udm_http.h \
+ udm_boolean.h \

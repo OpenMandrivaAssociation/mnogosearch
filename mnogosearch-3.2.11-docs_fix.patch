@@ -1,0 +1,11 @@
+--- doc/Makefile.am	2009-01-13 15:35:06.000000000 +0100
++++ doc/Makefile.am.oden	2009-02-14 15:28:05.000000000 +0100
+@@ -265,7 +265,7 @@
+ XML_SRC = ${XML_SRC_EN}
+ HTML_OUT = ${HTML_OUT_EN}
+ HTML_ALL = ${HTML_OUT} body-after.html body-before.html mnogo.css
+-HTML_ALL_NOJADE = README.html
++HTML_ALL_NOJADE =
+ doc_FILES= ${@doc_FILES@}
+ 
+ sample_FILES= samples/README \
