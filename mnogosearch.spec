@@ -9,7 +9,7 @@ Version:	3.3.10
 Release:	7
 License:	GPL
 Group:		System/Servers
-URL:		http://www.mnogosearch.org/
+URL:		https://www.mnogosearch.org/
 Source0:	http://www.mnogosearch.org/Download/mnogosearch-%{version}.tar.gz
 Source1:	mnogosearch-dbgen
 Source2:	mnogosearch-Mysql-database
