@@ -21,6 +21,8 @@ Patch3:		mnogosearch-3.2.11-docs_fix.patch
 Patch4:		mnogosearch-3.3.9-fix-install.patch
 Requires(pre):  apache-mpm-prefork
 Requires:       apache-mpm-prefork
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
